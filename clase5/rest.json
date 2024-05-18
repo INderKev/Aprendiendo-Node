@@ -1,0 +1,15 @@
+{
+  "rest":{
+    "tipo":"Arquitectura de software",
+    "principios": ["escalabilidad", "simplicidad", "portabilidad", "fiabilidad", "visibilidad","facíl de modificar"],
+    "pilares": {
+      "recursos": "Cada recurso tiene un URL",
+      "verbos HTTP": "Los verbos representan las acciones que se pueden realizar con cada uno de los recursos",
+      "separacion de conceptos": "Permite que el cliente y el servidor evolucionen de forma separada",
+      "representaciones": "La información se puede representar en diferentes formatos, como JSON, XML, HTML ...",
+      "stanless": "sin estado, la petición tiene toda la información con la que es posible darle una respuesta",
+      "interfaz uniforme": "que no cambien los resultados al hacerle peticiones a la misma URL con los mimos valores de entrada"
+    }
+  }
+
+}

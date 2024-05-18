@@ -1,0 +1,32 @@
+###Recuperar todas las películas
+GET http://localhost:3000/movies
+
+###Recuperar una película por id
+GET http://localhost:3000/movies/88d0b1be-132d-11ef-828f-83e84bdec95a
+
+
+### Recuperar todas las pelílas por un género
+GET http://localhost:3000/movies?genre=action
+
+### Crear una película con POST
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Avatar",
+  "year": 2009,
+  "director": "James Cameron",
+  "duration": 162,
+  "poster": "https://i.etsystatic.com/35681979/r/il/dfe3ba/3957859451/il_fullxfull.3957859451_h27r.jpg",
+  "genre": ["Action", "Adventure", "Fantasy"],
+  "rate": 7.8
+}
+
+### Actualizar una película
+
+PATCH http://localhost:3000/movies/1ba5b995-f7fe-4182-9b38-6d2a6661bf43
+Content-Type: application/json
+
+{
+  "title": "Avatar 4"
+}
