@@ -12,11 +12,6 @@ const { Client } = pg
 } */
 
 const config = {
-  user: 'postgres',
-  password: 'contra',
-  host: 'localhost',
-  port: 5432,
-  database: 'moviesdatabase'
 }
 
 const client = new Client(config)
