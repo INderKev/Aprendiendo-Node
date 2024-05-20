@@ -30,3 +30,6 @@ Content-Type: application/json
 {
   "title": "Avatar 4"
 }
+
+### Eliminar una película
+DELETE http://localhost:3000/movies/682bc962-1652-11ef-b9a4-33d14e236b18

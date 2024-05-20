@@ -22,7 +22,9 @@ export class MovieController {
       res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const newMovie = await MovieModel.create({ input: result.data })
-
+    if (newMovie === false) {
+      res.status(400).json({ error: 'Could not create resource' })
+    }
     res.status(201).json(newMovie) // se devuleve para actualizar la cache del cliente
   }
 
