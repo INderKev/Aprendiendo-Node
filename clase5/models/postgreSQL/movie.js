@@ -29,10 +29,10 @@ export class MovieModel {
   }
 
   static async getById ({ id }) {
-    const client = await pool.connect()
     if (id === '') {
       return []
     }
+    const client = await pool.connect()
     const result = await client.query(
       'SELECT * FROM movie m WHERE m.movie_id = $1',
       [id])
@@ -130,5 +130,25 @@ export class MovieModel {
   }
 
   static async update ({ id, input }) {
+    if (id === '') {
+      return false
+    }
+    const client = await pool.connect()
+    try {
+      const oldMovie = await client.query(
+        'SELECT * FROM movie m WHERE m.movie_id = $1',
+        [id])
+      const updatedMovie = { ...oldMovie.rows[0], ...input }
+      const queryUpdateMovie = 'UPDATE movie SET (title, year, director, duration, poster, rate) = ($1,$2,$3,$4,$5,$6) WHERE movie_id = $7;'
+      await client.query(queryUpdateMovie, [updatedMovie.title, updatedMovie.year, updatedMovie.director, updatedMovie.duration, updatedMovie.poster, updatedMovie.rate, id])
+      const newMovie = await client.query(
+        'SELECT * FROM movie m WHERE m.movie_id = $1',
+        [id])
+      client.release()
+      return (newMovie.rows)
+    } catch (err) {
+      client.release(err)
+      return false
+    }
   }
 }

@@ -24,11 +24,11 @@ Content-Type: application/json
 
 ### Actualizar una película
 
-PATCH http://localhost:3000/movies/1ba5b995-f7fe-4182-9b38-6d2a6661bf43
+PATCH http://localhost:3000/movies/88d0b1be-132d-11ef-828f-83e84bdec95a
 Content-Type: application/json
 
 {
-  "title": "Avatar 4"
+  "title": "Inception"
 }
 
 ### Eliminar una película
