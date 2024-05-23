@@ -15,6 +15,8 @@ const config = {
 
 const pool = new Pool(config)
 
+// convert ' in " let result = text.replace(/'/g, '"');
+
 export class MovieModel {
   static async getAll ({ genre }) {
     const client = await pool.connect()
@@ -131,16 +133,23 @@ export class MovieModel {
 
   static async update ({ id, input }) {
     if (id === '') {
-      return false
+      return true
     }
     const client = await pool.connect()
     try {
+      // recover the old movie
       const oldMovie = await client.query(
         'SELECT * FROM movie m WHERE m.movie_id = $1',
         [id])
-      const updatedMovie = { ...oldMovie.rows[0], ...input }
-      const queryUpdateMovie = 'UPDATE movie SET (title, year, director, duration, poster, rate) = ($1,$2,$3,$4,$5,$6) WHERE movie_id = $7;'
+      const resultOldGenres = await client.query(
+        'SELECT g.name FROM movie_genre k, genre g WHERE k.id_movie = $1 AND k.id_genre = g.id_genre;'
+        , [id])
+      const updatedMovie = { ...oldMovie.rows[0], ...input, genres: Object.values(resultOldGenres.rows[0]) }
+      console.log(updatedMovie)
+      await client.query('BEGIN')
+      const queryUpdateMovie = 'UPDATE movie SET (title, year, director, duration, poster, rate) = ($1,$2,$3,$4,$5,$6) WHERE movie_id = $7'
       await client.query(queryUpdateMovie, [updatedMovie.title, updatedMovie.year, updatedMovie.director, updatedMovie.duration, updatedMovie.poster, updatedMovie.rate, id])
+      // const queryUpdateGenres = 'UPDATE movie_genre SET'
       const newMovie = await client.query(
         'SELECT * FROM movie m WHERE m.movie_id = $1',
         [id])
